@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawTracker Pro - Demo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4e8cff;
+            --secondary: #ff6b6b;
+            --accent: #6bdb9e;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --radius: 16px;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding-bottom: 80px;
+        }
+        
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .profile {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        /* Pet Profile */
+        .pet-profile {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .pet-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent) 0%, #4ed9d9 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 36px;
+        }
+        
+        .pet-info h2 {
+            font-size: 22px;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .pet-breed {
+            color: var(--gray);
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        .pet-stats {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 13px;
+            color: var(--gray);
+        }
+        
+        /* Features Grid */
+        .section-title {
+            font-size: 20px;
+            margin: 25px 0 15px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .feature-card:nth-child(1) .feature-icon {
+            background: linear-gradient(135deg, var(--primary) 0%, #6b7fff 100%);
+        }
+        
+        .feature-card:nth-child(2) .feature-icon {
+            background: linear-gradient(135deg, var(--accent) 0%, #4ed9d9 100%);
+        }
+        
+        .feature-card:nth-child(3) .feature-icon {
+            background: linear-gradient(135deg, var(--secondary) 0%, #ff8e8e 100%);
+        }
+        
+        .feature-card:nth-child(4) .feature-icon {
+            background: linear-gradient(135deg, #ffb347 0%, #ffcc33 100%);
+        }
+        
+        .feature-card h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+        
+        .feature-card p {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+        
+        .feature-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--secondary);
+            color: white;
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        .locked .feature-icon {
+            filter: grayscale(80%);
+            opacity: 0.7;
+        }
+        
+        .locked h3, .locked p {
+            color: #aaa;
+        }
+        
+        /* Upgrade Banner */
+        .upgrade-banner {
+            background: linear-gradient(135deg, #4a00e0 0%, #8e2de2 100%);
+            border-radius: var(--radius);
+            padding: 25px;
+            color: white;
+            text-align: center;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .upgrade-banner::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        
+        .upgrade-banner::after {
+            content: "";
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        
+        .upgrade-title {
+            font-size: 22px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .upgrade-price {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 15px 0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .upgrade-features {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .upgrade-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+        }
+        
+        .upgrade-feature i {
+            color: var(--accent);
+        }
+        
+        .upgrade-button {
+            background: white;
+            color: #8e2de2;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .upgrade-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Demo Lock */
+        .demo-lock {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius);
+            backdrop-filter: blur(2px);
+        }
+        
+        .demo-lock i {
+            font-size: 28px;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .demo-lock span {
+            background: var(--secondary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        /* Responsive */
+        @media (max-width: 480px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pet-profile {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .pet-stats {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-paw"></i>
+                </div>
+                <div class="logo-text">PawTracker Pro</div>
+            </div>
+            <div class="profile">A</div>
+        </div>
+        
+        <!-- Pet Profile -->
+        <div class="pet-profile">
+            <div class="pet-avatar">
+                <i class="fas fa-dog"></i>
+            </div>
+            <div class="pet-info">
+                <h2>Rocky</h2>
+                <div class="pet-breed">German Shepherd</div>
+                <div class="pet-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">2.5</div>
+                        <div class="stat-label">Years</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">62</div>
+                        <div class="stat-label">Lbs</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">#1</div>
+                        <div class="stat-label">Rank</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Features Grid -->
+        <h2 class="section-title">
+            <i class="fas fa-star"></i>
+            Health Features
+        </h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <h3>Health Dashboard</h3>
+                <p>Track weight, vaccines, and overall health</p>
+                <button class="upgrade-button" style="padding: 8px 16px; font-size: 14px;">Access</button>
+            </div>
+            
+            <div class="feature-card locked">
+                <div class="demo-lock">
+                    <i class="fas fa-lock"></i>
+                    <span>PREMIUM</span>
+                </div>
+                <div class="feature-icon">
+                    <i class="fas fa-tint"></i>
+                </div>
+                <h3>Hydration Tracker</h3>
+                <p>Monitor water intake and get alerts</p>
+            </div>
+            
+            <div class="feature-card locked">
+                <div class="demo-lock">
+                    <i class="fas fa-lock"></i>
+                    <span>PREMIUM</span>
+                </div>
+                <div class="feature-icon">
+                    <i class="fas fa-walking"></i>
+                </div>
+                <h3>Walk Tracker</h3>
+                <p>GPS walk tracking & calorie counter</p>
+            </div>
+            
+            <div class="feature-card locked">
+                <div class="demo-lock">
+                    <i class="fas fa-lock"></i>
+                    <span>PREMIUM</span>
+                </div>
+                <div class="feature-icon">
+                    <i class="fas fa-stethoscope"></i>
+                </div>
+                <h3>Symptom Scanner</h3>
+                <p>Analyze symptoms & health advice</p>
+            </div>
+        </div>
+        
+        <!-- Upgrade Banner -->
+        <div class="upgrade-banner">
+            <h2 class="upgrade-title">Upgrade to Premium</h2>
+            <p>Unlock all features and premium benefits</p>
+            
+            <div class="upgrade-price">$14.70</div>
+            
+            <div class="upgrade-features">
+                <div class="upgrade-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Full access to all health features</span>
+                </div>
+                <div class="upgrade-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Personalized vet advice</span>
+                </div>
+                <div class="upgrade-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Unlimited GPS walk tracking</span>
+                </div>
+                <div class="upgrade-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Exclusive AI Symptom Scanner</span>
+                </div>
+            </div>
+            
+            <button class="upgrade-button pulse">
+                Upgrade Now - $14.70
+            </button>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            © 2023 PawTracker Pro | For a healthy and happy dog
+        </div>
+    </div>
+
+    <script>
+        // Demo functionality
+        document.querySelector('.upgrade-button').addEventListener('click', function() {
+            alert('You will be upgraded to the full version soon! Enjoy all features of PawTracker Pro.');
+        });
+        
+        // Add animation to feature cards
+        const featureCards = document.querySelectorAll('.feature-card');
+        featureCards.forEach(card => {
+            card.addEventListener('click', function() {
+                if(this.classList.contains('locked')) {
+                    this.classList.add('pulse');
+                    setTimeout(() => {
+                        this.classList.remove('pulse');
+                    }, 500);
+                    
+                    alert('This feature is available only in the Premium version. Upgrade now for full access!');
+                }
+            });
+        });
+        
+        // Pet profile animation
+        const petProfile = document.querySelector('.pet-profile');
+        setTimeout(() => {
+            petProfile.style.animation = 'none';
+            setTimeout(() => {
+                petProfile.style.animation = 'fadeIn 0.8s ease-out';
+            }, 10);
+        }, 3000);
+    </script>
+</body>
+</html>
