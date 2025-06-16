@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PawTracker Pro - Enhanced Demo</title>
+    <title>PawHealth - Demo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -365,6 +365,213 @@
             box-shadow: 0 4px 10px rgba(247, 37, 133, 0.3);
         }
         
+        /* Pet Profile Form */
+        .profile-form {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            display: none;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        .form-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #3a56d4;
+            transform: translateY(-3px);
+        }
+        
+        .btn-secondary {
+            background: #e9ecef;
+            color: var(--dark);
+        }
+        
+        .btn-secondary:hover {
+            background: #dde0e4;
+        }
+        
+        /* Health Dashboard */
+        .dashboard {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            display: none;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .dashboard-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .close-btn {
+            background: #e9ecef;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .close-btn:hover {
+            background: #dde0e4;
+        }
+        
+        .dashboard-content {
+            margin-top: 20px;
+        }
+        
+        .dashboard-item {
+            background: rgba(67, 97, 238, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .dashboard-item h4 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .dashboard-item p {
+            font-size: 16px;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* Vet Reminders */
+        .reminders {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            display: none;
+        }
+        
+        .reminder-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .reminder-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+        
+        .reminder-info h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .reminder-info p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        .add-reminder {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .add-reminder input {
+            flex: 1;
+            padding: 12px 15px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+        
+        .add-reminder button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+        
         /* Upgrade Banner */
         .upgrade-banner {
             background: linear-gradient(135deg, #3a0ca3 0%, #7209b7 100%);
@@ -537,33 +744,76 @@
                 <div class="logo-icon">
                     <i class="fas fa-paw"></i>
                 </div>
-                <div class="logo-text">PawTracker Pro</div>
+                <div class="logo-text">PawHealth</div>
             </div>
             <div class="profile">A</div>
         </div>
         
         <!-- Pet Profile -->
-        <div class="pet-profile">
+        <div class="pet-profile" id="petProfileSection">
             <div class="pet-avatar">
                 <i class="fas fa-dog"></i>
             </div>
             <div class="pet-info">
-                <h2>Rocky</h2>
-                <div class="pet-breed">German Shepherd</div>
+                <h2 id="petName">Rocky</h2>
+                <div class="pet-breed" id="petBreed">German Shepherd</div>
                 <div class="pet-stats">
                     <div class="stat-item">
-                        <div class="stat-value">2.5</div>
+                        <div class="stat-value" id="petAge">2.5</div>
                         <div class="stat-label">Years</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-value">62</div>
+                        <div class="stat-value" id="petWeight">62</div>
                         <div class="stat-label">Lbs</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-value">#1</div>
+                        <div class="stat-value" id="petRank">#1</div>
                         <div class="stat-label">Rank</div>
                     </div>
                 </div>
+            </div>
+        </div>
+        
+        <!-- Pet Profile Form -->
+        <div class="profile-form" id="profileForm">
+            <h2 class="section-title">
+                <i class="fas fa-dog"></i>
+                Pet Profile
+            </h2>
+            
+            <div class="form-group">
+                <label for="petNameInput">Pet Name</label>
+                <input type="text" id="petNameInput" placeholder="Enter pet name">
+            </div>
+            
+            <div class="form-group">
+                <label for="petBreedInput">Breed</label>
+                <input type="text" id="petBreedInput" placeholder="Enter breed">
+            </div>
+            
+            <div class="form-group">
+                <label for="petAgeInput">Age (years)</label>
+                <input type="number" id="petAgeInput" placeholder="Enter age">
+            </div>
+            
+            <div class="form-group">
+                <label for="petWeightInput">Weight (lbs)</label>
+                <input type="number" id="petWeightInput" placeholder="Enter weight">
+            </div>
+            
+            <div class="form-group">
+                <label for="petMedications">Medications</label>
+                <input type="text" id="petMedications" placeholder="List medications">
+            </div>
+            
+            <div class="form-group">
+                <label for="petConditions">Health Conditions</label>
+                <input type="text" id="petConditions" placeholder="Any health conditions">
+            </div>
+            
+            <div class="form-buttons">
+                <button class="btn btn-secondary" id="cancelProfileBtn">Cancel</button>
+                <button class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
             </div>
         </div>
         
@@ -573,13 +823,12 @@
             Health Features
         </h2>
         <div class="features-grid">
-            <div class="feature-card">
+            <div class="feature-card" id="healthDashboardBtn">
                 <div class="feature-icon">
                     <i class="fas fa-heartbeat"></i>
                 </div>
                 <h3>Health Dashboard</h3>
                 <p>Track weight, vaccines & health</p>
-                <button class="upgrade-button" style="padding: 10px 20px; font-size: 16px; width: 100%;">Access</button>
             </div>
             
             <div class="feature-card locked">
@@ -618,14 +867,12 @@
                 <p>Health analysis & advice</p>
             </div>
             
-            <!-- New Feature in Demo -->
-            <div class="feature-card">
+            <div class="feature-card" id="vetRemindersBtn">
                 <div class="feature-icon">
                     <i class="fas fa-calendar-check"></i>
                 </div>
                 <h3>Vet Reminders</h3>
                 <p>Appointments & vaccinations</p>
-                <button class="upgrade-button" style="padding: 10px 20px; font-size: 16px; width: 100%;">Set Reminder</button>
             </div>
             
             <div class="feature-card locked">
@@ -638,6 +885,86 @@
                 </div>
                 <h3>Food Tracker</h3>
                 <p>Diet & nutrition monitoring</p>
+            </div>
+        </div>
+        
+        <!-- Health Dashboard -->
+        <div class="dashboard" id="healthDashboard">
+            <div class="dashboard-header">
+                <div class="dashboard-title">Health Dashboard</div>
+                <div class="close-btn" id="closeDashboard">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            
+            <div class="dashboard-content">
+                <div class="dashboard-item">
+                    <h4><i class="fas fa-weight"></i> Weight History</h4>
+                    <p>Current: <strong>62 lbs</strong></p>
+                    <p>Target: <strong>64 lbs</strong></p>
+                </div>
+                
+                <div class="dashboard-item">
+                    <h4><i class="fas fa-syringe"></i> Vaccinations</h4>
+                    <p>Rabies: <strong>Up to date</strong> (Next due: 12/2024)</p>
+                    <p>Distemper: <strong>Up to date</strong> (Next due: 06/2024)</p>
+                </div>
+                
+                <div class="dashboard-item">
+                    <h4><i class="fas fa-pills"></i> Medications</h4>
+                    <p>Heartworm Prevention: <strong>Monthly</strong></p>
+                    <p>Flea & Tick Prevention: <strong>Monthly</strong></p>
+                </div>
+                
+                <div class="dashboard-item">
+                    <h4><i class="fas fa-file-medical"></i> Health Notes</h4>
+                    <p>No current health issues. Last checkup: 05/15/2023</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Vet Reminders -->
+        <div class="reminders" id="vetReminders">
+            <div class="dashboard-header">
+                <div class="dashboard-title">Vet Reminders</div>
+                <div class="close-btn" id="closeReminders">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            
+            <div class="reminder-item">
+                <div class="reminder-icon">
+                    <i class="fas fa-syringe"></i>
+                </div>
+                <div class="reminder-info">
+                    <h4>Rabies Vaccination</h4>
+                    <p>Due: December 15, 2023</p>
+                </div>
+            </div>
+            
+            <div class="reminder-item">
+                <div class="reminder-icon">
+                    <i class="fas fa-calendar"></i>
+                </div>
+                <div class="reminder-info">
+                    <h4>Annual Checkup</h4>
+                    <p>Scheduled: January 10, 2024</p>
+                </div>
+            </div>
+            
+            <div class="reminder-item">
+                <div class="reminder-icon">
+                    <i class="fas fa-pills"></i>
+                </div>
+                <div class="reminder-info">
+                    <h4>Heartworm Medication</h4>
+                    <p>Monthly - Next dose: November 1, 2023</p>
+                </div>
+            </div>
+            
+            <div class="add-reminder">
+                <input type="text" placeholder="Add new reminder">
+                <button><i class="fas fa-plus"></i></button>
             </div>
         </div>
         
@@ -682,68 +1009,107 @@
         
         <!-- Footer -->
         <div class="footer">
-            © 2023 PawTracker Pro | For a healthy and happy dog
+            © 2023 PawHealth | For a healthy and happy dog
         </div>
     </div>
 
     <script>
-        // Demo functionality
-        document.getElementById('upgradeBtn').addEventListener('click', function() {
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-            setTimeout(() => {
-                alert('Thank you for upgrading to PawTracker Pro! You now have full access to all premium features.');
-                this.innerHTML = 'Upgrade Now - $14.70';
-            }, 1500);
-        });
-        
-        // Add animation to feature cards
-        const featureCards = document.querySelectorAll('.feature-card');
-        featureCards.forEach(card => {
-            card.addEventListener('click', function() {
-                if(this.classList.contains('locked')) {
+        // Initialize demo functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle pet profile form
+            document.getElementById('petProfileSection').addEventListener('click', function() {
+                this.style.display = 'none';
+                document.getElementById('profileForm').style.display = 'block';
+                
+                // Fill form with current values
+                document.getElementById('petNameInput').value = document.getElementById('petName').textContent;
+                document.getElementById('petBreedInput').value = document.getElementById('petBreed').textContent;
+                document.getElementById('petAgeInput').value = document.getElementById('petAge').textContent;
+                document.getElementById('petWeightInput').value = document.getElementById('petWeight').textContent;
+            });
+            
+            // Save profile
+            document.getElementById('saveProfileBtn').addEventListener('click', function() {
+                document.getElementById('petName').textContent = document.getElementById('petNameInput').value;
+                document.getElementById('petBreed').textContent = document.getElementById('petBreedInput').value;
+                document.getElementById('petAge').textContent = document.getElementById('petAgeInput').value;
+                document.getElementById('petWeight').textContent = document.getElementById('petWeightInput').value;
+                
+                document.getElementById('profileForm').style.display = 'none';
+                document.getElementById('petProfileSection').style.display = 'flex';
+            });
+            
+            // Cancel profile edit
+            document.getElementById('cancelProfileBtn').addEventListener('click', function() {
+                document.getElementById('profileForm').style.display = 'none';
+                document.getElementById('petProfileSection').style.display = 'flex';
+            });
+            
+            // Health Dashboard
+            document.getElementById('healthDashboardBtn').addEventListener('click', function() {
+                document.getElementById('healthDashboard').style.display = 'block';
+            });
+            
+            document.getElementById('closeDashboard').addEventListener('click', function() {
+                document.getElementById('healthDashboard').style.display = 'none';
+            });
+            
+            // Vet Reminders
+            document.getElementById('vetRemindersBtn').addEventListener('click', function() {
+                document.getElementById('vetReminders').style.display = 'block';
+            });
+            
+            document.getElementById('closeReminders').addEventListener('click', function() {
+                document.getElementById('vetReminders').style.display = 'none';
+            });
+            
+            // Upgrade button
+            document.getElementById('upgradeBtn').addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                setTimeout(() => {
+                    alert('Thank you for choosing PawHealth Pro! You now have full access to all premium features.');
+                    this.innerHTML = 'Upgrade Now - $14.70';
+                }, 1500);
+            });
+            
+            // Locked features
+            const lockedFeatures = document.querySelectorAll('.feature-card.locked');
+            lockedFeatures.forEach(feature => {
+                feature.addEventListener('click', function() {
                     this.classList.add('pulse');
                     setTimeout(() => {
                         this.classList.remove('pulse');
                     }, 500);
                     
-                    // Show upgrade modal
-                    document.getElementById('upgradeBtn').classList.add('pulse');
-                    setTimeout(() => {
-                        document.getElementById('upgradeBtn').classList.remove('pulse');
-                    }, 2000);
-                    
                     alert('This feature is available only in the Premium version. Upgrade now for full access!');
-                } else {
-                    // Animate the clicked card
-                    this.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        this.style.transform = '';
-                    }, 300);
+                });
+            });
+            
+            // Add reminder
+            document.querySelector('.add-reminder button').addEventListener('click', function() {
+                const input = document.querySelector('.add-reminder input');
+                if (input.value.trim() !== '') {
+                    const remindersContainer = document.querySelector('.reminders .dashboard-content');
                     
-                    // Show success message based on feature
-                    const featureName = this.querySelector('h3').textContent;
-                    alert(`Opening ${featureName}...`);
+                    const newReminder = document.createElement('div');
+                    newReminder.className = 'reminder-item';
+                    newReminder.innerHTML = `
+                        <div class="reminder-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="reminder-info">
+                            <h4>${input.value}</h4>
+                            <p>Added: ${new Date().toLocaleDateString()}</p>
+                        </div>
+                    `;
+                    
+                    remindersContainer.insertBefore(newReminder, remindersContainer.firstChild);
+                    input.value = '';
+                    
+                    alert('Reminder added successfully!');
                 }
             });
         });
-        
-        // Animate pet profile periodically
-        const petProfile = document.querySelector('.pet-profile');
-        setInterval(() => {
-            petProfile.style.boxShadow = '0 8px 30px rgba(67, 97, 238, 0.2)';
-            setTimeout(() => {
-                petProfile.style.boxShadow = 'var(--shadow)';
-            }, 1000);
-        }, 5000);
-        
-        // Make dog wag continuously
-        const dogIcon = document.querySelector('.dog-icon');
-        setInterval(() => {
-            dogIcon.style.animation = 'none';
-            setTimeout(() => {
-                dogIcon.style.animation = 'wag 1s infinite alternate';
-            }, 10);
-        }, 5000);
     </script>
 </body>
 </html>
