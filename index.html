@@ -651,6 +651,27 @@
         .tip-item {
             padding: 15px 0;
             border-bottom: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tip-content {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+        
+        .tip-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            background-size: cover;
+            background-position: center;
+            flex-shrink: 0;
+        }
+        
+        .tip-text {
+            flex: 1;
         }
         
         .tip-item h4 {
@@ -835,6 +856,16 @@
             
             .dashboard-stats {
                 grid-template-columns: 1fr;
+            }
+            
+            .tip-content {
+                flex-direction: column;
+            }
+            
+            .tip-image {
+                width: 100%;
+                height: 150px;
+                margin-bottom: 15px;
             }
         }
     </style>
@@ -1118,27 +1149,47 @@
             </div>
             
             <div class="tip-item">
-                <h4><i class="fas fa-bone"></i> Nutrition Advice</h4>
-                <p>German Shepherds benefit from high-quality protein sources. Include lean meats, fish, and eggs in their diet for optimal muscle health.</p>
-                <div class="tip-category">Nutrition</div>
+                <div class="tip-content">
+                    <div class="tip-image" style="background-image: url('https://images.unsplash.com/photo-1517423568366-8b83523034fd?auto=format&fit=crop&w=200&h=200')"></div>
+                    <div class="tip-text">
+                        <h4><i class="fas fa-bone"></i> Nutrition Advice</h4>
+                        <p>German Shepherds benefit from high-quality protein sources. Include lean meats, fish, and eggs in their diet for optimal muscle health. Avoid grains if your dog has allergies.</p>
+                        <div class="tip-category">Nutrition</div>
+                    </div>
+                </div>
             </div>
             
             <div class="tip-item">
-                <h4><i class="fas fa-running"></i> Exercise Recommendations</h4>
-                <p>Adult German Shepherds need 1-2 hours of exercise daily. Combine walks with mental stimulation activities to keep them healthy and happy.</p>
-                <div class="tip-category">Exercise</div>
+                <div class="tip-content">
+                    <div class="tip-image" style="background-image: url('https://images.unsplash.com/photo-1517423738875-5ce310acd3da?auto=format&fit=crop&w=200&h=200')"></div>
+                    <div class="tip-text">
+                        <h4><i class="fas fa-running"></i> Exercise Recommendations</h4>
+                        <p>Adult German Shepherds need 1-2 hours of exercise daily. Combine walks with mental stimulation activities to keep them healthy and happy. Avoid strenuous exercise in puppies.</p>
+                        <div class="tip-category">Exercise</div>
+                    </div>
+                </div>
             </div>
             
             <div class="tip-item">
-                <h4><i class="fas fa-stethoscope"></i> Hip Dysplasia Prevention</h4>
-                <p>Maintain a healthy weight to reduce stress on joints. Consider joint supplements with glucosamine and chondroitin for added support.</p>
-                <div class="tip-category">Joint Health</div>
+                <div class="tip-content">
+                    <div class="tip-image" style="background-image: url('https://images.unsplash.com/photo-1517420879524-86d64ac2f339?auto=format&fit=crop&w=200&h=200')"></div>
+                    <div class="tip-text">
+                        <h4><i class="fas fa-stethoscope"></i> Hip Dysplasia Prevention</h4>
+                        <p>Maintain a healthy weight to reduce stress on joints. Consider joint supplements with glucosamine and chondroitin for added support. Provide orthopedic bedding.</p>
+                        <div class="tip-category">Joint Health</div>
+                    </div>
+                </div>
             </div>
             
             <div class="tip-item">
-                <h4><i class="fas fa-teeth"></i> Dental Care</h4>
-                <p>Brush your dog's teeth 2-3 times a week to prevent periodontal disease. Dental chews can help reduce plaque buildup between brushings.</p>
-                <div class="tip-category">Dental Health</div>
+                <div class="tip-content">
+                    <div class="tip-image" style="background-image: url('https://images.unsplash.com/photo-1517420704952-d9f39e95b43e?auto=format&fit=crop&w=200&h=200')"></div>
+                    <div class="tip-text">
+                        <h4><i class="fas fa-teeth"></i> Dental Care</h4>
+                        <p>Brush your dog's teeth 2-3 times a week to prevent periodontal disease. Dental chews can help reduce plaque buildup between brushings. Regular vet dental checkups are essential.</p>
+                        <div class="tip-category">Dental Health</div>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -1268,10 +1319,11 @@
                 document.getElementById('petProfileSection').style.display = 'flex';
             });
             
+            // Feature section handlers
             // Health Dashboard
             document.getElementById('healthDashboardBtn').addEventListener('click', function() {
-                document.getElementById('healthDashboard').style.display = 'block';
                 hideAllFeatures();
+                document.getElementById('healthDashboard').style.display = 'block';
             });
             
             document.getElementById('closeDashboard').addEventListener('click', function() {
@@ -1280,8 +1332,8 @@
             
             // Vet Reminders
             document.getElementById('vetRemindersBtn').addEventListener('click', function() {
-                document.getElementById('vetReminders').style.display = 'block';
                 hideAllFeatures();
+                document.getElementById('vetReminders').style.display = 'block';
             });
             
             document.getElementById('closeReminders').addEventListener('click', function() {
@@ -1290,8 +1342,8 @@
             
             // Health Tips
             document.getElementById('healthTipsBtn').addEventListener('click', function() {
-                document.getElementById('healthTips').style.display = 'block';
                 hideAllFeatures();
+                document.getElementById('healthTips').style.display = 'block';
             });
             
             document.getElementById('closeHealthTips').addEventListener('click', function() {
