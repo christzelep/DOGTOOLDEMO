@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PawHealth - Demo</title>
+    <title>PawHealth - Premium Demo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -147,6 +147,22 @@
             animation: fadeIn 0.8s ease-out;
             backdrop-filter: blur(5px);
             border: 2px solid rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .health-score {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(6, 214, 160, 0.15);
+            color: #058c6a;
+            padding: 8px 15px;
+            border-radius: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .pet-avatar {
@@ -388,7 +404,7 @@
             color: var(--dark);
         }
         
-        .form-group input, .form-group select {
+        .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: 12px 15px;
             border-radius: 12px;
@@ -397,10 +413,15 @@
             transition: var(--transition);
         }
         
-        .form-group input:focus, .form-group select:focus {
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             border-color: var(--primary);
             outline: none;
             box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
         }
         
         .form-buttons {
@@ -506,6 +527,32 @@
             line-height: 1.6;
         }
         
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: rgba(76, 201, 240, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-card .label {
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
         /* Vet Reminders */
         .reminders {
             background: rgba(255, 255, 255, 0.9);
@@ -524,6 +571,7 @@
             gap: 15px;
             padding: 15px 0;
             border-bottom: 1px solid #eee;
+            position: relative;
         }
         
         .reminder-icon {
@@ -549,6 +597,22 @@
             font-size: 14px;
         }
         
+        .delete-reminder {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(239, 71, 111, 0.1);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--danger);
+        }
+        
         .add-reminder {
             display: flex;
             gap: 10px;
@@ -570,6 +634,48 @@
             padding: 12px 20px;
             border-radius: 12px;
             cursor: pointer;
+        }
+        
+        /* Health Tips */
+        .health-tips {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            display: none;
+        }
+        
+        .tip-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .tip-item h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tip-item p {
+            font-size: 15px;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .tip-category {
+            display: inline-block;
+            background: rgba(6, 214, 160, 0.1);
+            color: #058c6a;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 8px;
         }
         
         /* Upgrade Banner */
@@ -726,6 +832,10 @@
                 padding: 16px 30px;
                 font-size: 18px;
             }
+            
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -751,6 +861,10 @@
         
         <!-- Pet Profile -->
         <div class="pet-profile" id="petProfileSection">
+            <div class="health-score">
+                <i class="fas fa-heart"></i>
+                <span id="healthScoreValue">92</span>/100
+            </div>
             <div class="pet-avatar">
                 <i class="fas fa-dog"></i>
             </div>
@@ -783,32 +897,32 @@
             
             <div class="form-group">
                 <label for="petNameInput">Pet Name</label>
-                <input type="text" id="petNameInput" placeholder="Enter pet name">
+                <input type="text" id="petNameInput" placeholder="Enter pet name" value="Rocky">
             </div>
             
             <div class="form-group">
                 <label for="petBreedInput">Breed</label>
-                <input type="text" id="petBreedInput" placeholder="Enter breed">
+                <input type="text" id="petBreedInput" placeholder="Enter breed" value="German Shepherd">
             </div>
             
             <div class="form-group">
                 <label for="petAgeInput">Age (years)</label>
-                <input type="number" id="petAgeInput" placeholder="Enter age">
+                <input type="number" id="petAgeInput" placeholder="Enter age" value="2.5" min="0" step="0.1">
             </div>
             
             <div class="form-group">
                 <label for="petWeightInput">Weight (lbs)</label>
-                <input type="number" id="petWeightInput" placeholder="Enter weight">
+                <input type="number" id="petWeightInput" placeholder="Enter weight" value="62" min="0">
             </div>
             
             <div class="form-group">
                 <label for="petMedications">Medications</label>
-                <input type="text" id="petMedications" placeholder="List medications">
+                <input type="text" id="petMedications" placeholder="List medications" value="Heartworm Prevention, Flea & Tick">
             </div>
             
             <div class="form-group">
                 <label for="petConditions">Health Conditions</label>
-                <input type="text" id="petConditions" placeholder="Any health conditions">
+                <textarea id="petConditions" placeholder="Any health conditions">Mild hip dysplasia, seasonal allergies</textarea>
             </div>
             
             <div class="form-buttons">
@@ -875,16 +989,12 @@
                 <p>Appointments & vaccinations</p>
             </div>
             
-            <div class="feature-card locked">
-                <div class="demo-lock">
-                    <i class="fas fa-lock"></i>
-                    <span>PREMIUM</span>
-                </div>
+            <div class="feature-card" id="healthTipsBtn">
                 <div class="feature-icon">
-                    <i class="fas fa-bone"></i>
+                    <i class="fas fa-lightbulb"></i>
                 </div>
-                <h3>Food Tracker</h3>
-                <p>Diet & nutrition monitoring</p>
+                <h3>Health Tips</h3>
+                <p>Expert advice for your dog</p>
             </div>
         </div>
         
@@ -897,10 +1007,29 @@
                 </div>
             </div>
             
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="value" id="dashWeight">62 lbs</div>
+                    <div class="label">Current Weight</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="dashAge">2.5 yrs</div>
+                    <div class="label">Age</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="dashHealthScore">92/100</div>
+                    <div class="label">Health Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="dashMedCount">2</div>
+                    <div class="label">Medications</div>
+                </div>
+            </div>
+            
             <div class="dashboard-content">
                 <div class="dashboard-item">
                     <h4><i class="fas fa-weight"></i> Weight History</h4>
-                    <p>Current: <strong>62 lbs</strong></p>
+                    <p>Current: <strong id="dashWeightValue">62 lbs</strong></p>
                     <p>Target: <strong>64 lbs</strong></p>
                 </div>
                 
@@ -912,13 +1041,13 @@
                 
                 <div class="dashboard-item">
                     <h4><i class="fas fa-pills"></i> Medications</h4>
-                    <p>Heartworm Prevention: <strong>Monthly</strong></p>
+                    <p id="dashMedications">Heartworm Prevention: <strong>Monthly</strong></p>
                     <p>Flea & Tick Prevention: <strong>Monthly</strong></p>
                 </div>
                 
                 <div class="dashboard-item">
                     <h4><i class="fas fa-file-medical"></i> Health Notes</h4>
-                    <p>No current health issues. Last checkup: 05/15/2023</p>
+                    <p id="dashHealthNotes">No current health issues. Last checkup: 05/15/2023</p>
                 </div>
             </div>
         </div>
@@ -932,39 +1061,84 @@
                 </div>
             </div>
             
-            <div class="reminder-item">
-                <div class="reminder-icon">
-                    <i class="fas fa-syringe"></i>
+            <div id="remindersList">
+                <div class="reminder-item">
+                    <div class="delete-reminder" data-id="1">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div class="reminder-icon">
+                        <i class="fas fa-syringe"></i>
+                    </div>
+                    <div class="reminder-info">
+                        <h4>Rabies Vaccination</h4>
+                        <p>Due: December 15, 2023</p>
+                    </div>
                 </div>
-                <div class="reminder-info">
-                    <h4>Rabies Vaccination</h4>
-                    <p>Due: December 15, 2023</p>
+                
+                <div class="reminder-item">
+                    <div class="delete-reminder" data-id="2">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div class="reminder-icon">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <div class="reminder-info">
+                        <h4>Annual Checkup</h4>
+                        <p>Scheduled: January 10, 2024</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="reminder-item">
-                <div class="reminder-icon">
-                    <i class="fas fa-calendar"></i>
-                </div>
-                <div class="reminder-info">
-                    <h4>Annual Checkup</h4>
-                    <p>Scheduled: January 10, 2024</p>
-                </div>
-            </div>
-            
-            <div class="reminder-item">
-                <div class="reminder-icon">
-                    <i class="fas fa-pills"></i>
-                </div>
-                <div class="reminder-info">
-                    <h4>Heartworm Medication</h4>
-                    <p>Monthly - Next dose: November 1, 2023</p>
+                
+                <div class="reminder-item">
+                    <div class="delete-reminder" data-id="3">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div class="reminder-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <div class="reminder-info">
+                        <h4>Heartworm Medication</h4>
+                        <p>Monthly - Next dose: November 1, 2023</p>
+                    </div>
                 </div>
             </div>
             
             <div class="add-reminder">
-                <input type="text" placeholder="Add new reminder">
-                <button><i class="fas fa-plus"></i></button>
+                <input type="text" id="newReminderInput" placeholder="Add new reminder">
+                <button id="addReminderBtn"><i class="fas fa-plus"></i></button>
+            </div>
+        </div>
+        
+        <!-- Health Tips -->
+        <div class="health-tips" id="healthTips">
+            <div class="dashboard-header">
+                <div class="dashboard-title">Health Tips</div>
+                <div class="close-btn" id="closeHealthTips">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            
+            <div class="tip-item">
+                <h4><i class="fas fa-bone"></i> Nutrition Advice</h4>
+                <p>German Shepherds benefit from high-quality protein sources. Include lean meats, fish, and eggs in their diet for optimal muscle health.</p>
+                <div class="tip-category">Nutrition</div>
+            </div>
+            
+            <div class="tip-item">
+                <h4><i class="fas fa-running"></i> Exercise Recommendations</h4>
+                <p>Adult German Shepherds need 1-2 hours of exercise daily. Combine walks with mental stimulation activities to keep them healthy and happy.</p>
+                <div class="tip-category">Exercise</div>
+            </div>
+            
+            <div class="tip-item">
+                <h4><i class="fas fa-stethoscope"></i> Hip Dysplasia Prevention</h4>
+                <p>Maintain a healthy weight to reduce stress on joints. Consider joint supplements with glucosamine and chondroitin for added support.</p>
+                <div class="tip-category">Joint Health</div>
+            </div>
+            
+            <div class="tip-item">
+                <h4><i class="fas fa-teeth"></i> Dental Care</h4>
+                <p>Brush your dog's teeth 2-3 times a week to prevent periodontal disease. Dental chews can help reduce plaque buildup between brushings.</p>
+                <div class="tip-category">Dental Health</div>
             </div>
         </div>
         
@@ -1028,15 +1202,64 @@
                 document.getElementById('petWeightInput').value = document.getElementById('petWeight').textContent;
             });
             
-            // Save profile
+            // Save profile and update dashboard
             document.getElementById('saveProfileBtn').addEventListener('click', function() {
-                document.getElementById('petName').textContent = document.getElementById('petNameInput').value;
-                document.getElementById('petBreed').textContent = document.getElementById('petBreedInput').value;
-                document.getElementById('petAge').textContent = document.getElementById('petAgeInput').value;
-                document.getElementById('petWeight').textContent = document.getElementById('petWeightInput').value;
+                // Get form values
+                const petName = document.getElementById('petNameInput').value;
+                const petBreed = document.getElementById('petBreedInput').value;
+                const petAge = parseFloat(document.getElementById('petAgeInput').value);
+                const petWeight = parseFloat(document.getElementById('petWeightInput').value);
+                const medications = document.getElementById('petMedications').value;
+                const conditions = document.getElementById('petConditions').value;
                 
+                // Update profile display
+                document.getElementById('petName').textContent = petName;
+                document.getElementById('petBreed').textContent = petBreed;
+                document.getElementById('petAge').textContent = petAge;
+                document.getElementById('petWeight').textContent = petWeight;
+                
+                // Calculate health score based on inputs
+                let healthScore = 90; // Base score
+                
+                // Adjust based on age
+                if (petAge < 2) healthScore += 5;
+                else if (petAge > 7) healthScore -= 10;
+                
+                // Adjust based on weight (assuming ideal weight for breed)
+                if (petBreed.toLowerCase().includes("german shepherd")) {
+                    const idealWeight = 70;
+                    const weightDiff = Math.abs(petWeight - idealWeight);
+                    healthScore -= weightDiff;
+                }
+                
+                // Adjust based on health conditions
+                if (conditions.toLowerCase().includes("dysplasia")) healthScore -= 10;
+                if (conditions.toLowerCase().includes("allerg")) healthScore -= 5;
+                
+                // Ensure score stays within bounds
+                healthScore = Math.max(60, Math.min(healthScore, 100));
+                
+                // Update health score
+                document.getElementById('healthScoreValue').textContent = Math.round(healthScore);
+                
+                // Update dashboard values
+                document.getElementById('dashWeight').textContent = petWeight + ' lbs';
+                document.getElementById('dashWeightValue').textContent = petWeight + ' lbs';
+                document.getElementById('dashAge').textContent = petAge + ' yrs';
+                document.getElementById('dashHealthScore').textContent = Math.round(healthScore) + '/100';
+                document.getElementById('dashMedications').textContent = medications;
+                document.getElementById('dashHealthNotes').textContent = conditions || "No current health issues";
+                
+                // Count medications
+                const medCount = medications.split(',').filter(item => item.trim()).length;
+                document.getElementById('dashMedCount').textContent = medCount;
+                
+                // Close form and show profile
                 document.getElementById('profileForm').style.display = 'none';
                 document.getElementById('petProfileSection').style.display = 'flex';
+                
+                // Show notification
+                showNotification('Profile updated successfully!', 'success');
             });
             
             // Cancel profile edit
@@ -1048,6 +1271,7 @@
             // Health Dashboard
             document.getElementById('healthDashboardBtn').addEventListener('click', function() {
                 document.getElementById('healthDashboard').style.display = 'block';
+                hideAllFeatures();
             });
             
             document.getElementById('closeDashboard').addEventListener('click', function() {
@@ -1057,10 +1281,64 @@
             // Vet Reminders
             document.getElementById('vetRemindersBtn').addEventListener('click', function() {
                 document.getElementById('vetReminders').style.display = 'block';
+                hideAllFeatures();
             });
             
             document.getElementById('closeReminders').addEventListener('click', function() {
                 document.getElementById('vetReminders').style.display = 'none';
+            });
+            
+            // Health Tips
+            document.getElementById('healthTipsBtn').addEventListener('click', function() {
+                document.getElementById('healthTips').style.display = 'block';
+                hideAllFeatures();
+            });
+            
+            document.getElementById('closeHealthTips').addEventListener('click', function() {
+                document.getElementById('healthTips').style.display = 'none';
+            });
+            
+            // Add reminder
+            document.getElementById('addReminderBtn').addEventListener('click', function() {
+                const input = document.getElementById('newReminderInput');
+                if (input.value.trim() !== '') {
+                    const remindersList = document.getElementById('remindersList');
+                    const reminderId = Date.now();
+                    
+                    const newReminder = document.createElement('div');
+                    newReminder.className = 'reminder-item';
+                    newReminder.innerHTML = `
+                        <div class="delete-reminder" data-id="${reminderId}">
+                            <i class="fas fa-times"></i>
+                        </div>
+                        <div class="reminder-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="reminder-info">
+                            <h4>${input.value}</h4>
+                            <p>Added: ${new Date().toLocaleDateString()}</p>
+                        </div>
+                    `;
+                    
+                    remindersList.appendChild(newReminder);
+                    input.value = '';
+                    
+                    // Add event listener to new delete button
+                    newReminder.querySelector('.delete-reminder').addEventListener('click', function() {
+                        this.closest('.reminder-item').remove();
+                        showNotification('Reminder deleted', 'info');
+                    });
+                    
+                    showNotification('Reminder added successfully!', 'success');
+                }
+            });
+            
+            // Add event listeners to existing delete buttons
+            document.querySelectorAll('.delete-reminder').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.closest('.reminder-item').remove();
+                    showNotification('Reminder deleted', 'info');
+                });
             });
             
             // Upgrade button
@@ -1081,34 +1359,74 @@
                         this.classList.remove('pulse');
                     }, 500);
                     
-                    alert('This feature is available only in the Premium version. Upgrade now for full access!');
+                    // Enhanced upgrade prompt
+                    const featuresList = [
+                        "Hydration Tracker: Monitor your dog's water intake",
+                        "Walk Tracker: GPS tracking and calorie counting",
+                        "Symptom Scanner: AI-powered health analysis",
+                        "Food Tracker: Complete nutrition monitoring"
+                    ];
+                    
+                    let message = "This premium feature is locked in the demo version.\n\nUnlock with Pro to access:\n";
+                    featuresList.forEach(feat => {
+                        message += `✓ ${feat}\n`;
+                    });
+                    message += "\nUpgrade now for just $14.70!";
+                    
+                    alert(message);
                 });
             });
             
-            // Add reminder
-            document.querySelector('.add-reminder button').addEventListener('click', function() {
-                const input = document.querySelector('.add-reminder input');
-                if (input.value.trim() !== '') {
-                    const remindersContainer = document.querySelector('.reminders .dashboard-content');
-                    
-                    const newReminder = document.createElement('div');
-                    newReminder.className = 'reminder-item';
-                    newReminder.innerHTML = `
-                        <div class="reminder-icon">
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <div class="reminder-info">
-                            <h4>${input.value}</h4>
-                            <p>Added: ${new Date().toLocaleDateString()}</p>
-                        </div>
-                    `;
-                    
-                    remindersContainer.insertBefore(newReminder, remindersContainer.firstChild);
-                    input.value = '';
-                    
-                    alert('Reminder added successfully!');
-                }
-            });
+            // Helper function to hide all features
+            function hideAllFeatures() {
+                document.getElementById('healthDashboard').style.display = 'none';
+                document.getElementById('vetReminders').style.display = 'none';
+                document.getElementById('healthTips').style.display = 'none';
+            }
+            
+            // Show notification function
+            function showNotification(message, type) {
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.innerHTML = `
+                    <div class="notification-content">
+                        <i class="fas fa-bell"></i>
+                        ${message}
+                    </div>
+                `;
+                
+                // Add to body
+                document.body.appendChild(notification);
+                
+                // Position and animate
+                notification.style.position = 'fixed';
+                notification.style.top = '20px';
+                notification.style.right = '20px';
+                notification.style.padding = '15px 20px';
+                notification.style.background = type === 'success' ? 'rgba(6, 214, 160, 0.9)' : 
+                                               type === 'info' ? 'rgba(67, 97, 238, 0.9)' : 
+                                               'rgba(255, 209, 102, 0.9)';
+                notification.style.color = 'white';
+                notification.style.borderRadius = '12px';
+                notification.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+                notification.style.zIndex = '1000';
+                notification.style.transform = 'translateX(100%)';
+                notification.style.transition = 'transform 0.3s ease';
+                
+                // Animate in
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(0)';
+                }, 10);
+                
+                // Remove after delay
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 3000);
+            }
         });
     </script>
 </body>
