@@ -834,6 +834,17 @@
             animation: pulse 2s infinite;
         }
         
+        /* New upgrade animation */
+        @keyframes upgradeSuccess {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .upgrade-success {
+            animation: upgradeSuccess 0.5s ease-in-out;
+        }
+        
         /* Responsive */
         @media (max-width: 480px) {
             .features-grid {
@@ -1393,13 +1404,31 @@
                 });
             });
             
-            // Upgrade button
+            // Upgrade button - OPEN GUMPROAD LINK
             document.getElementById('upgradeBtn').addEventListener('click', function() {
-                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                const button = this;
+                const originalHTML = button.innerHTML;
+                
+                // Show processing animation
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                button.classList.remove('pulse');
+                
+                // Simulate processing delay
                 setTimeout(() => {
-                    alert('Thank you for choosing PawHealth Pro! You now have full access to all premium features.');
-                    this.innerHTML = 'Upgrade Now - $14.70';
-                }, 1500);
+                    // Open Gumroad link in a new tab
+                    window.open('https://gadgeteer70.gumroad.com/l/dogs', '_blank');
+                    
+                    // Show success feedback
+                    button.innerHTML = '<i class="fas fa-check"></i> Redirecting...';
+                    button.classList.add('upgrade-success');
+                    
+                    // Reset button after a short delay
+                    setTimeout(() => {
+                        button.innerHTML = originalHTML;
+                        button.classList.add('pulse');
+                        button.classList.remove('upgrade-success');
+                    }, 1500);
+                }, 1000);
             });
             
             // Locked features
@@ -1426,6 +1455,12 @@
                     message += "\nUpgrade now for just $14.70!";
                     
                     alert(message);
+                    
+                    // Also show the upgrade banner
+                    document.querySelector('.upgrade-banner').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
                 });
             });
             
