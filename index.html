@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PawHealth - Premium Demo</title>
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -813,6 +814,78 @@
             border-top: 1px solid rgba(0,0,0,0.05);
         }
         
+        /* Install App Button */
+        .install-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        
+        .install-btn:hover {
+            transform: translateY(-3px);
+            background: #3a56d4;
+        }
+        
+        /* Free Training Banner */
+        .training-banner {
+            background: linear-gradient(135deg, #06d6a0 0%, #4cc9f0 100%);
+            border-radius: var(--radius);
+            padding: 25px;
+            color: white;
+            text-align: center;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            animation: bannerPulse 4s infinite;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .training-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .training-text {
+            margin-bottom: 20px;
+            font-size: 16px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .training-button {
+            background: white;
+            color: #06a77d;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .training-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -863,6 +936,11 @@
             .upgrade-button {
                 padding: 16px 30px;
                 font-size: 18px;
+            }
+            
+            .training-button {
+                padding: 12px 25px;
+                font-size: 16px;
             }
             
             .dashboard-stats {
@@ -1038,6 +1116,15 @@
                 <h3>Health Tips</h3>
                 <p>Expert advice for your dog</p>
             </div>
+        </div>
+        
+        <!-- Free Training Banner -->
+        <div class="training-banner">
+            <h3 class="training-title">FREE Dog Training Course</h3>
+            <p class="training-text">Get professional training from certified experts at no cost. Limited time offer!</p>
+            <button class="training-button" id="trainingBtn">
+                Claim Free Training
+            </button>
         </div>
         
         <!-- Health Dashboard -->
@@ -1249,6 +1336,11 @@
         </div>
     </div>
 
+    <!-- Install App Button -->
+    <button class="install-btn" id="installBtn" style="display: none;">
+        <i class="fas fa-download"></i> Install App
+    </button>
+
     <script>
         // Initialize demo functionality
         document.addEventListener('DOMContentLoaded', function() {
@@ -1431,6 +1523,20 @@
                 }, 1000);
             });
             
+            // Training button
+            document.getElementById('trainingBtn').addEventListener('click', function() {
+                const button = this;
+                const originalHTML = button.innerHTML;
+                
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Redirecting...';
+                
+                setTimeout(() => {
+                    window.open('https://tinyurl.com/DogFreeTrainingCl', '_blank');
+                    button.innerHTML = originalHTML;
+                    showNotification('Free training course opened!', 'success');
+                }, 800);
+            });
+            
             // Locked features
             const lockedFeatures = document.querySelectorAll('.feature-card.locked');
             lockedFeatures.forEach(feature => {
@@ -1513,6 +1619,56 @@
                         document.body.removeChild(notification);
                     }, 300);
                 }, 3000);
+            }
+            
+            // PWA Installation Logic
+            let deferredPrompt;
+            const installBtn = document.getElementById('installBtn');
+            
+            window.addEventListener('beforeinstallprompt', (e) => {
+                // Prevent the mini-infobar from appearing on mobile
+                e.preventDefault();
+                // Stash the event so it can be triggered later
+                deferredPrompt = e;
+                // Show the install button
+                installBtn.style.display = 'flex';
+            });
+            
+            installBtn.addEventListener('click', async () => {
+                if (!deferredPrompt) return;
+                
+                // Show the install prompt
+                deferredPrompt.prompt();
+                
+                // Wait for the user to respond to the prompt
+                const { outcome } = await deferredPrompt.userChoice;
+                
+                if (outcome === 'accepted') {
+                    showNotification('PawHealth installed successfully!', 'success');
+                    installBtn.style.display = 'none';
+                }
+                
+                // Clear the saved prompt
+                deferredPrompt = null;
+            });
+            
+            window.addEventListener('appinstalled', () => {
+                // Hide the install button after successful installation
+                installBtn.style.display = 'none';
+                deferredPrompt = null;
+            });
+            
+            // Register service worker
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('service-worker.js')
+                        .then(registration => {
+                            console.log('Service Worker registered: ', registration);
+                        })
+                        .catch(error => {
+                            console.log('Service Worker registration failed: ', error);
+                        });
+                });
             }
         });
     </script>
